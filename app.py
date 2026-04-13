@@ -1,20 +1,17 @@
 import streamlit as st
 from google import genai
-import os
-from dotenv import load_dotenv
-
-load_dotenv()
-
-api_key = os.getenv("GEMINI_API_KEY")
-
-client = genai.Client(api_key=api_key)
 
 st.title("🤖 Gemini Q&A App")
+
+# ✅ API key from Streamlit Secrets (for deployment)
+api_key = st.secrets["GEMINI_API_KEY"]
+
+client = genai.Client(api_key=api_key)
 
 question = st.text_input("Ask your question:")
 
 if st.button("Ask Gemini"):
-    if question:
+    if question.strip():
         try:
             response = client.models.generate_content(
                 model="gemini-3-flash-preview",
