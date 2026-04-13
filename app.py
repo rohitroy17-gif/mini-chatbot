@@ -12,7 +12,7 @@ question = st.text_input("Ask your question:")
 if st.button("Ask Gemini"):
     if question.strip():
         try:
-            model = genai.GenerativeModel("gemini-1.5-flash")
+            model = genai.GenerativeModel("gemini-3-flash-preview")
             response = model.generate_content(question)
 
             st.markdown("### 📢 Answer:")
