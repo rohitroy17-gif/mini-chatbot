@@ -1,22 +1,19 @@
 import streamlit as st
-from google import genai
+import google.generativeai as genai
 
 st.title("🤖 Gemini Q&A App")
 
-# ✅ API key from Streamlit Secrets (for deployment)
 api_key = st.secrets["GEMINI_API_KEY"]
 
-client = genai.Client(api_key=api_key)
+genai.configure(api_key=api_key)
 
 question = st.text_input("Ask your question:")
 
 if st.button("Ask Gemini"):
     if question.strip():
         try:
-            response = client.models.generate_content(
-                model="gemini-3-flash-preview",
-                contents=question
-            )
+            model = genai.GenerativeModel("gemini-1.5-flash")
+            response = model.generate_content(question)
 
             st.markdown("### 📢 Answer:")
             st.markdown(response.text)
